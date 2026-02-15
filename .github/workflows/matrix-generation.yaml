@@ -196,6 +196,11 @@ jobs:
           DATE=${{ steps.reportdate.outputs.DATE }}
           mkdir -p verification/test_results/history/$DATE
 
+          if [ -f verification/output/full-report.md ]; then
+            cp verification/output/full-report.md \
+              verification/test_results/history/$DATE/
+          fi
+
           for site in verification/output/*; do
             [ -d "$site" ] || continue
 
