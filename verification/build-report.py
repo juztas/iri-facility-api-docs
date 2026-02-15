@@ -90,7 +90,7 @@ def main():
     official_results = {}
     spec_results = {}
     missing_ops = {}
-    extra_ops = {}
+    extra_ops_all = {}
 
     for site_dir in sites:
         host = site_dir.name
@@ -98,7 +98,7 @@ def main():
         official_results[host] = parse_junit(site_dir / "official.xml")
         spec_results[host] = parse_spec_json(site_dir / "spec.compliance.json")
         missing_ops[site_dir.name] = {f"{item['method']} {item['path']}" for item in spec_results[host].get("missing", [])}
-        extra_ops[site_dir.name] = {f"{item['method']} {item['path']}" for item in spec_results[site_dir.name].get("extra", [])}
+        extra_ops_all[site_dir.name] = {f"{item['method']} {item['path']}" for item in spec_results[site_dir.name].get("extra", [])}
 
 
     lines = []
@@ -174,18 +174,22 @@ def main():
 
         for site in sites:
             host = site.name
-
             local_status = local_results[host].get(op)
 
-            if op in extra_ops[host]:
+            extras = extra_ops_all.get(host, set())
+            missing = missing_ops.get(host, set())
+
+            if op in extras:
                 if local_status == "PASS":
                     status = "EXTRA-PASS"
                 elif local_status == "FAIL":
                     status = "EXTRA-FAIL"
                 else:
                     status = "EXTRA"
-            elif op in missing_ops[host]:
+
+            elif op in missing:
                 status = "MISSING"
+
             else:
                 status = local_status if local_status else "—"
 
