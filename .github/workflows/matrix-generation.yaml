@@ -48,34 +48,45 @@ jobs:
             site: https://api.alcf.anl.gov/
             type: remote
 
-    if: |
-      github.event.inputs.site == 'all' ||
-      matrix.name == github.event.inputs.site
-
     steps:
+      - name: Set flag for selected site run
+        id: siterun
+        run: |
+          if [[ "${{ github.event.inputs.site }}" == "all" || \
+                "${{ matrix.name }}" == "${{ github.event.inputs.site }}" ]]; then
+            echo "run=true" >> $GITHUB_OUTPUT
+          else
+            echo "run=false" >> $GITHUB_OUTPUT
+            echo "Skipping ${{ matrix.name }}"
+          fi
+
       - name: Checkout docs repository
+        if: steps.siterun.outputs.run == 'true'
         uses: actions/checkout@v4
 
       - name: Checkout Python API repository
+        if: steps.siterun.outputs.run == 'true'
         uses: actions/checkout@v4
         with:
           repository: doe-iri/iri-facility-api-python
           path: api
 
       - uses: actions/setup-python@v5
+        if: steps.siterun.outputs.run == 'true'
         with:
           python-version: "3.14"
 
       - name: Install verification dependencies
+        if: steps.siterun.outputs.run == 'true'
         run: pip install -r verification/requirements.txt
 
       # ---------- LOCAL API ----------
       - name: Build Python API Docker image
-        if: matrix.type == 'local'
+        if: matrix.type == 'local' && steps.siterun.outputs.run == 'true'
         run: docker build -t iri-facility-api-base ./api
 
       - name: Run Python API container
-        if: matrix.type == 'local'
+        if: matrix.type == 'local' && steps.siterun.outputs.run == 'true'
         run: |
           docker run -d -p 8000:8000 --name iri-facility-api-base \
             -e IRI_API_ADAPTER_facility=app.demo_adapter.DemoAdapter \
@@ -89,7 +100,7 @@ jobs:
             iri-facility-api-base
 
       - name: Wait for API readiness
-        if: matrix.type == 'local'
+        if: matrix.type == 'local' && steps.siterun.outputs.run == 'true'
         run: |
           for i in {1..60}; do
             if curl -fs http://127.0.0.1:8000/openapi.json; then exit 0; fi
@@ -100,6 +111,7 @@ jobs:
 
       # ---------- VALIDATION ----------
       - name: Run site validation
+        if: steps.siterun.outputs.run == 'true'
         run: |
           mkdir -p verification/output
           python verification/site-validation.py \
@@ -107,6 +119,7 @@ jobs:
             --sites "${{ matrix.site }}"
 
       - name: Upload validation artifacts
+        if: steps.siterun.outputs.run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: validation-${{ matrix.name }}
@@ -114,7 +127,7 @@ jobs:
 
       # Stop local container
       - name: Stop and remove local container
-        if: always() && matrix.type == 'local'
+        if: always() && matrix.type == 'local' && steps.siterun.outputs.run == 'true'
         run: docker stop iri-facility-api-base || true && docker rm iri-facility-api-base || true
 
 # Build matrix report after all validations are complete
@@ -140,6 +153,7 @@ jobs:
         run: pip install -r verification/requirements.txt
 
       - name: Download all artifacts
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           path: collected-output
