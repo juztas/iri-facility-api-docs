@@ -199,6 +199,8 @@ jobs:
           if [ -f verification/output/full-report.md ]; then
             cp verification/output/full-report.md \
               verification/test_results/history/$DATE/
+            cp verification/output/full-report.md \
+              verification/test_results/latest/full-report.md
           fi
 
           for site in verification/output/*; do
