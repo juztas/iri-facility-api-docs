@@ -69,6 +69,8 @@ def badge(status: str):
         "FAIL": "badge-fail",
         "MISSING": "badge-missing",
         "EXTRA": "badge-extra",
+        "EXTRA-PASS": "badge-extra-pass",
+        "EXTRA-FAIL": "badge-extra-fail",
     }
     return f"![][{mapping.get(status, '')}]" if status in mapping else status
 
@@ -88,6 +90,7 @@ def main():
     official_results = {}
     spec_results = {}
     missing_ops = {}
+    extra_ops = {}
 
     for site_dir in sites:
         host = site_dir.name
@@ -95,6 +98,7 @@ def main():
         official_results[host] = parse_junit(site_dir / "official.xml")
         spec_results[host] = parse_spec_json(site_dir / "spec.compliance.json")
         missing_ops[site_dir.name] = {f"{item['method']} {item['path']}" for item in spec_results[host].get("missing", [])}
+        extra_ops[site_dir.name] = {f"{item['method']} {item['path']}" for item in spec_results[site_dir.name].get("extra", [])}
 
 
     lines = []
@@ -167,14 +171,25 @@ def main():
 
     for op in sorted(all_local_ops):
         row = [op]
+
         for site in sites:
             host = site.name
-            if op in missing_ops[host]:
+
+            local_status = local_results[host].get(op)
+
+            if op in extra_ops[host]:
+                if local_status == "PASS":
+                    status = "EXTRA-PASS"
+                elif local_status == "FAIL":
+                    status = "EXTRA-FAIL"
+                else:
+                    status = "EXTRA"
+            elif op in missing_ops[host]:
                 status = "MISSING"
             else:
-                status = local_results[host].get(op, "—")
-            row.append(badge(status))
+                status = local_status if local_status else "—"
 
+            row.append(badge(status))
 
         write("| " + " | ".join(row) + " |")
 
@@ -184,6 +199,8 @@ def main():
     write("[badge-fail]: https://img.shields.io/badge/FAIL-red")
     write("[badge-missing]: https://img.shields.io/badge/MISSING-red")
     write("[badge-extra]: https://img.shields.io/badge/EXTRA-orange")
+    write("[badge-extra-pass]: https://img.shields.io/badge/EXTRA--PASS-blue")
+    write("[badge-extra-fail]: https://img.shields.io/badge/EXTRA--FAIL-purple")
 
     REPORT_FILE.write_text("\n".join(lines), encoding="utf-8")
     print(f"\nReport written to {REPORT_FILE}")
