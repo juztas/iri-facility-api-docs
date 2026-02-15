@@ -87,12 +87,15 @@ def main():
     local_results = {}
     official_results = {}
     spec_results = {}
+    missing_ops = {}
 
     for site_dir in sites:
         host = site_dir.name
         local_results[host] = parse_junit(site_dir / "local.xml")
         official_results[host] = parse_junit(site_dir / "official.xml")
         spec_results[host] = parse_spec_json(site_dir / "spec.compliance.json")
+        missing_ops[site_dir.name] = {f"{item['method']} {item['path']}" for item in spec_results[host].get("missing", [])}
+
 
     lines = []
 
@@ -120,10 +123,9 @@ def main():
         row = [op]
         for site in sites:
             host = site.name
-            missing_ops = {f"{item['method']} {item['path']}" for item in spec_results[host].get("missing", [])}
             extra_ops = {f"{item['method']} {item['path']}" for item in spec_results[host].get("extra", [])}
 
-            if op in missing_ops:
+            if op in missing_ops[host]:
                 status = "MISSING"
             elif op in extra_ops:
                 status = "EXTRA"
@@ -141,8 +143,14 @@ def main():
         row = [op]
         for site in sites:
             host = site.name
-            status = official_results[host].get(op, "MISSING")
+            if op in missing_ops[host]:
+                status = "MISSING"
+            else:
+                status = official_results[host].get(op, "MISSING")
+
             row.append(badge(status))
+
+
         write("| " + " | ".join(row) + " |")
 
     # 3. Local Behavioral
@@ -161,8 +169,13 @@ def main():
         row = [op]
         for site in sites:
             host = site.name
-            status = local_results[host].get(op, "—")
+            if op in missing_ops[host]:
+                status = "MISSING"
+            else:
+                status = local_results[host].get(op, "—")
             row.append(badge(status))
+
+
         write("| " + " | ".join(row) + " |")
 
     write("\n---\n")

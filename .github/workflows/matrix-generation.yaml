@@ -2,6 +2,19 @@ name: IRI Endpoints Validation Matrix generation
 
 on:
   workflow_dispatch:
+    inputs:
+      site:
+        description: "Select site to validate"
+        type: choice
+        required: true
+        default: all
+        options:
+          - all
+          - localhost
+          - ESnet_East
+          - ESnet_West
+          - NERSC
+          - ALCF
 
 permissions:
   contents: write
@@ -34,6 +47,10 @@ jobs:
           - name: ALCF
             site: https://api.alcf.anl.gov/
             type: remote
+
+    if: |
+      github.event.inputs.site == 'all' ||
+      matrix.name == github.event.inputs.site
 
     steps:
       - name: Checkout docs repository
@@ -100,7 +117,6 @@ jobs:
         if: always() && matrix.type == 'local'
         run: docker stop iri-facility-api-base || true && docker rm iri-facility-api-base || true
 
-
 # Build matrix report after all validations are complete
   build-global-report:
     needs: validate
@@ -130,12 +146,30 @@ jobs:
 
       - name: Merge outputs into single directory
         run: |
-          mkdir -p verification/output
+          mkdir -p verification/test_results/latest
           shopt -s nullglob
+
           for artifact in collected-output/*; do
             for site in "$artifact"/*; do
-              cp -r "$site" verification/output/
+              host=$(basename "$site")
+
+              echo "Updating latest results for $host"
+
+              rm -rf verification/test_results/latest/$host
+              mkdir -p verification/test_results/latest/$host
+
+              cp -r "$site"/* verification/test_results/latest/$host/
             done
+          done
+
+      - name: Prepare output from latest data
+        run: |
+          rm -rf verification/output
+          mkdir -p verification/output
+
+          shopt -s nullglob
+          for site in verification/test_results/latest/*; do
+            cp -r "$site" verification/output/
           done
 
       - name: Build matrix report
@@ -143,19 +177,23 @@ jobs:
           python verification/build-report.py \
             --official-schema "$OFFICIAL_SCHEMA"
 
-      - name: Store versioned + latest matrix report
+      - name: Store versioned + latest matrix report + per-site results
         run: |
-          mkdir -p verification/test_results/history/${{ steps.reportdate.outputs.DATE }}
-          cp verification/output/*.md verification/test_results/history/${{ steps.reportdate.outputs.DATE }}/ 2>/dev/null || true
+          DATE=${{ steps.reportdate.outputs.DATE }}
+          mkdir -p verification/test_results/history/$DATE
 
-          rm -rf verification/test_results/latest
-          mkdir -p verification/test_results/latest
-          cp verification/output/*.md verification/test_results/latest/ 2>/dev/null || true
+          for site in verification/output/*; do
+            host=$(basename "$site")
+            mkdir -p verification/test_results/history/$DATE/$host
+            cp -r "$site"/* verification/test_results/history/$DATE/$host/
+          done
 
       - name: Commit matrix report
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
+
           git add verification/test_results/
           git commit -m "Matrix report generated at ${{ steps.reportdate.outputs.DATE }}" || echo "No changes"
+
           git push
