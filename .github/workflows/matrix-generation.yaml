@@ -197,6 +197,8 @@ jobs:
           mkdir -p verification/test_results/history/$DATE
 
           for site in verification/output/*; do
+            [ -d "$site" ] || continue
+
             host=$(basename "$site")
             mkdir -p verification/test_results/history/$DATE/$host
             cp -r "$site"/* verification/test_results/history/$DATE/$host/
