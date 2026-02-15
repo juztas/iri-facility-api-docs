@@ -11,7 +11,7 @@ from datetime import datetime
 import yaml
 
 OUTPUT_DIR = Path(__file__).parent / "output"
-REPORT_FILE = OUTPUT_DIR / "federation-report.md"
+REPORT_FILE = OUTPUT_DIR / "full-report.md"
 
 
 def load_official_operations(schema_path):
