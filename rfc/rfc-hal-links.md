@@ -571,10 +571,15 @@ invocation semantics.
 
 ## 11. References
 
-1. RFC 2119 and RFC 8174, requirements-language conventions.
-2. RFC 8288, *Web Linking*.
-3. RFC 8631, *Link Relation Types for Web Services*.
-4. JSON Hypertext Application Language, `draft-kelly-json-hal`.
-5. OpenAPI Specification 3.1.
+1. [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119) and
+   [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174), requirements-language
+   conventions.
+2. [RFC 8288, *Web Linking*](https://www.rfc-editor.org/rfc/rfc8288).
+3. [RFC 8631, *Link Relation Types for Web
+   Services*](https://www.rfc-editor.org/rfc/rfc8631).
+4. [JSON Hypertext Application Language,
+   `draft-kelly-json-hal`](https://datatracker.ietf.org/doc/html/draft-kelly-json-hal).
+5. [OpenAPI Specification
+   3.1](https://spec.openapis.org/oas/v3.1.0.html).
 6. [DOE-IRI Link Relation Index](../registry/relations/README.md).
 7. [IRI Facility API OpenAPI v2](../specification-v2/openapi/all_spec_v2.yaml).

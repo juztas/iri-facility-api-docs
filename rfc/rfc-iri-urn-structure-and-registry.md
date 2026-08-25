@@ -477,11 +477,16 @@ This document does not require action by IANA, however, in the future the IRI In
 
 # 10. References
 
-* RFC 2119, **Key words for use in RFCs to Indicate Requirement Levels**.  
-* RFC 8174, **Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words**.  
-* RFC 8141, **Uniform Resource Names (URNs).**  
-* RFC3986, **Uniform Resource Identifier (URI): Generic Syntax.**  
-* RFC5234, **Augmented BNF for Syntax Specifications: ABNF.**
+* [RFC 2119, **Key words for use in RFCs to Indicate Requirement
+  Levels**](https://www.rfc-editor.org/rfc/rfc2119).
+* [RFC 8174, **Ambiguity of Uppercase vs Lowercase in RFC 2119 Key
+  Words**](https://www.rfc-editor.org/rfc/rfc8174).
+* [RFC 8141, **Uniform Resource Names
+  (URNs)**](https://www.rfc-editor.org/rfc/rfc8141).
+* [RFC 3986, **Uniform Resource Identifier (URI): Generic
+  Syntax**](https://www.rfc-editor.org/rfc/rfc3986).
+* [RFC 5234, **Augmented BNF for Syntax Specifications:
+  ABNF**](https://www.rfc-editor.org/rfc/rfc5234).
 
 # Appendix A. Example Registry Entries
 

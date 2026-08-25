@@ -907,12 +907,18 @@ The DOE-IRI URN namespace specification separately discusses potential future IA
 
 # 16. References
 
-1. RFC 2119, *Key words for use in RFCs to Indicate Requirement Levels*.
-2. RFC 8174, *Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words*.
-3. RFC 8141, *Uniform Resource Names (URNs)*.
-4. RFC 8259, *The JavaScript Object Notation (JSON) Data Interchange Format*.
-5. RFC 6906, *The 'profile' Link Relation Type*.
-6. OpenAPI Specification 3.1.
+1. [RFC 2119, *Key words for use in RFCs to Indicate Requirement
+   Levels*](https://www.rfc-editor.org/rfc/rfc2119).
+2. [RFC 8174, *Ambiguity of Uppercase vs Lowercase in RFC 2119 Key
+   Words*](https://www.rfc-editor.org/rfc/rfc8174).
+3. [RFC 8141, *Uniform Resource Names
+   (URNs)*](https://www.rfc-editor.org/rfc/rfc8141).
+4. [RFC 8259, *The JavaScript Object Notation (JSON) Data Interchange
+   Format*](https://www.rfc-editor.org/rfc/rfc8259).
+5. [RFC 6906, *The 'profile' Link Relation
+   Type*](https://www.rfc-editor.org/rfc/rfc6906).
+6. [OpenAPI Specification
+   3.1](https://spec.openapis.org/oas/v3.1.0.html).
 7. [A URN Namespace for the DoE IRI Project](./rfc-iri-urn-structure-and-registry.md).
 8. [HAL `_links` for the IRI Facility API](./rfc-hal-links.md).
 9. [DOE-IRI URN Registry](../registry/urns/README.md).
