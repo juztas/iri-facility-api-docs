@@ -212,6 +212,30 @@ invoked, while the other advertised relations identify which resources or
 operation entry points are relevant. A `service-desc` link does not redefine
 those relations or grant authorization to invoke the described operations.
 
+### 3.1. Canonical OpenAPI and Deployed Service Descriptions
+
+An IRI API implementation SHOULD expose a `service-desc` link whose target is
+the machine-readable description of the deployed service applicable to the
+link context. The `service-desc` relation identifies a service description
+applicable to that resource or service context; it does not express conformance
+to the IRI specification.
+
+When the target is an OpenAPI document, that document SHOULD accurately
+describe the endpoints, server information, security requirements, and
+operations available from the deployed service.
+
+IRI MAY publish a canonical, versioned OpenAPI specification under the
+`iri.science` namespace. The canonical specification defines the portable IRI
+API contract and may serve as the basis for conforming implementations. The
+intended canonical publication URI for IRI v2 is
+`https://iri.science/api/v2/openapi.json`.
+
+An independently deployed IRI API SHOULD NOT use the canonical `iri.science`
+OpenAPI specification as its `service-desc` target unless that document
+accurately describes the deployed service itself. An advertised operation
+relation continues to identify applicability and location; the applicable
+OpenAPI description defines invocation semantics.
+
 HAL CURIEs MAY abbreviate registered DOE-IRI relation identifiers. The
 canonical IRI CURIE declaration is:
 
@@ -403,8 +427,9 @@ Producers:
 - MUST use standard relations where applicable and registered relations for
   every `iri:*` link.
 - MUST enforce the mapping equivalence rules when retaining legacy fields.
-- MAY advertise `service-desc` when a machine-readable service description is
-  applicable to the represented resource or service context.
+- SHOULD advertise `service-desc` whose target is the machine-readable
+  description of the deployed service applicable to the represented resource
+  or service context.
 - MAY omit authorization-sensitive links where the relevant profile permits;
   an omission is not proof that the relationship or affordance is absent.
 - MUST NOT expose credentials, tokens, secrets, private keys, or protected
