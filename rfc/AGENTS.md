@@ -61,6 +61,24 @@ The relation registry is authoritative for `iri:*` relation semantics.
 `service-desc` targets a service description such as OpenAPI and should not be
 given an unrelated IRI representation profile.
 
+`service-desc` is not a conformance relation. Examples involving an
+independently deployed facility should normally target that deployment's
+OpenAPI description:
+
+```json
+{
+  "service-desc": {
+    "href": "https://api.example.org/openapi.json",
+    "type": "application/vnd.oai.openapi+json;version=3.1"
+  }
+}
+```
+
+Do not point a deployed-facility `service-desc` example at
+`https://iri.science/api/v2/openapi.json` merely to indicate IRI conformance.
+That target is valid only when the canonical document accurately describes the
+deployed service applicable to the link context.
+
 Operation-affordance relations such as `iri:submit-job` target operation entry
 points; do not use a Job representation profile on the operation link.
 

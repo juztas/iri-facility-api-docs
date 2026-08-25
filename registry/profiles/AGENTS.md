@@ -117,6 +117,26 @@ Do not add an IRI representation profile to:
 - ordinary external `help` targets;
 - operation entry points such as `iri:submit-job`.
 
+Profile examples must preserve these distinct targets and authorities:
+
+```text
+target representation profile
+    https://iri.science/profiles/...
+
+service-desc
+    deployed API OpenAPI description
+
+canonical IRI OpenAPI
+    standards/reference contract
+```
+
+For an independently deployed facility, generate `service-desc` examples with
+a deployment-local target such as `https://api.example.org/openapi.json`. Do
+not use `https://iri.science/api/v2/openapi.json` as that deployment's
+`service-desc` merely to indicate IRI conformance. The canonical URI is valid as
+a `service-desc` target only when its document accurately describes the service
+represented by the link context.
+
 For polymorphic relations such as `iri:attached-to` and `iri:hosted-on`, choose
 the profile from the actual target type in the example.
 

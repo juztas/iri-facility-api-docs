@@ -112,6 +112,34 @@ registry, or registered link-relation semantics.
 | Job | [`compute/job.md`](compute/job.md) | `https://iri.science/profiles/compute/job` |
 | Task | [`task.md`](task.md) | `https://iri.science/profiles/task` |
 
+## Profiles, API Contracts, and Service Descriptions
+
+These authorities serve different purposes:
+
+```text
+Representation profile
+    semantic representation contract
+
+Link relation
+    relationship or applicability semantics
+
+Canonical IRI OpenAPI
+    portable structural and API contract
+
+Deployment OpenAPI
+    contract for an actual running service
+
+service-desc
+    discovery mechanism for the applicable deployed service description
+```
+
+The intended canonical publication URI for the IRI v2 OpenAPI contract is
+`https://iri.science/api/v2/openapi.json`. An independently deployed facility's
+`service-desc` normally identifies its deployment OpenAPI, which can state its
+actual servers, security requirements, and implemented operations. The
+canonical OpenAPI does not become a representation profile, and profiles do not
+redefine OpenAPI conformance.
+
 ## Resource Definition Profiles
 
 Resource Definition Profiles specialize the common IRI Resource representation

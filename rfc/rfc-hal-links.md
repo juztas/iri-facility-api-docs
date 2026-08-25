@@ -199,7 +199,7 @@ profiles, but the protocol does not require dereferencing.
     },
     "service-desc": {
       "href": "https://api.example.org/openapi.json",
-      "type": "application/json",
+      "type": "application/vnd.oai.openapi+json;version=3.1",
       "title": "IRI Facility API OpenAPI description"
     }
   }
@@ -505,7 +505,7 @@ response is `Job`. The second, independent object illustrates a
       "iri:submit-job": { "href": "/api/v2/compute/job/pioneer-compute" },
       "service-desc": {
         "href": "/openapi.json",
-        "type": "application/json",
+        "type": "application/vnd.oai.openapi+json;version=3.1",
         "title": "IRI Facility API OpenAPI description"
       }
     }
@@ -546,7 +546,7 @@ profiles, but the protocol does not require dereferencing.
     },
     "service-desc": {
       "href": "https://api.example.org/openapi.json",
-      "type": "application/json",
+      "type": "application/vnd.oai.openapi+json;version=3.1",
       "title": "IRI Facility API OpenAPI description"
     }
   }

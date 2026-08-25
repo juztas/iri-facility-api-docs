@@ -38,6 +38,25 @@ During additive migration, retained URI properties and their mapped HAL links id
 
 An operation-affordance relation such as `iri:submit-job` targets an operation entry point, not the representation returned by that operation. OpenAPI remains authoritative for method, request/response schemas, authentication, authorization, and error handling.
 
+Canonical and deployed OpenAPI documents have different roles:
+
+```text
+Canonical IRI OpenAPI
+    defines the portable IRI API contract
+
+Deployed OpenAPI
+    describes one running implementation
+
+service-desc
+    normally identifies the deployed OpenAPI applicable to the link context
+```
+
+For IRI v2, `https://iri.science/api/v2/openapi.json` is the intended canonical
+publication URI. An independently deployed facility normally advertises its own
+OpenAPI document through `service-desc`; a link to the canonical document does
+not express conformance or substitute for deployment-specific server, security,
+and operation information.
+
 ### HAL Link Object four-layer distinction
 
 Documentation and implementations should preserve this distinction:
@@ -75,6 +94,9 @@ Link visibility may be authorization-sensitive where the applicable relation def
 Clients should not infer a target URL from a Resource identifier or Resource Type when the representation can advertise that target directly.
 
 ## Normative and current sources
+
+This decision record remains explanatory. If it differs from the sources below,
+the applicable RFC, OpenAPI, or registry definition controls.
 
 - `rfc/rfc-hal-links.md`
 - `registry/relations/README.md`
