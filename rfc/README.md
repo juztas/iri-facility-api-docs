@@ -39,3 +39,7 @@ For more information on the broader DoE IRI project, official reference implemen
 2. **[Type-Specific Attributes and Resource Definition Profiles for IRI Resource Objects](./rfc-type-specific-attributes.md)**:
 
 	This document defines the semantics of `Resource.attributes` and how `resource_type` selects the applicable Resource Definition semantics. Resource Type URNs and Resource Definition Profile URIs are distinct identifiers. The current IRI v2 OpenAPI schema remains authoritative for the structural contract, including the optionality, nullability, JSON structure, and additional-properties behavior of `attributes`. The RFC specializes the existing IRI v2 `Resource` representation and does not introduce separate Resource Definition or Resource State API objects.
+
+3. **[HAL `_links` for the IRI Facility API](./rfc-hal-links.md)**:
+
+	This document defines an additive HAL `_links` convention for IRI v2 resource-oriented JSON representations. It makes related resources, topology relationships, operation entry points, and machine-readable service descriptions explicit and navigable; defines migration of existing navigable URI-valued properties to standard or registered DOE-IRI link relations; and advertises an initial job-submission affordance. OpenAPI remains authoritative for operation invocation, and the RFC does not change the production OpenAPI schemas.

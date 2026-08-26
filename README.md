@@ -15,11 +15,28 @@ workflows on top of IRI.
 
 # Contents
 
-## 1. [IRI Request For Comments](./rfc)
-## 2. [IRI Registry](./registry/README.md)
-### 2.1. [URNs](./registry/urns/README.md)
-### 2.2. [Resource Profiles](./registry/profiles/README.md)
-### 2.3. [Link Relation Index](./registry/relations/README.md)
-## 5. [IRI Specification 1.0](./specification-v1/README.md)
-## 6. [IRI Specification 2.0](./specification-v2/README.md)
-## 7. [IRI Presentations](./presentations)
+### [IRI Wiki](https://github.com/doe-iri/iri-facility-api-docs/wiki) - Your source for documentation
+
+### [IRI Request For Comments](./rfc) - New proposals for enhancements to the IRI API
+
+  - [IRI URN Structure and Registry](rfc/rfc-iri-urn-structure-and-registry.md)
+  - [Type-Specific Attributes and Resource Definition Profiles for IRI Resource Objects](rfc/rfc-type-specific-attributes.md)
+  - [HAL `_links` for the IRI Facility API](rfc/rfc-hal-links.md)
+
+### [IRI Registry](./registry/README.md) - Registered URNs, resource profiles, and link relations
+
+  - [URNs](./registry/urns/README.md)
+  - [Resource Profiles](./registry/profiles/README.md)
+  - [Link Relation Index](./registry/relations/README.md)
+
+### [IRI Specification 1.0](./specification-v1/README.md) - Accepted production version
+
+### [IRI Specification 2.0](./specification-v2/README.md) - Current development version
+
+### [IRI Presentations](./presentations) - IRI-related presentations
+- [SC24 BoF: IRI Interfaces - November, 2024](<SC24_BoF_IRI_Interfaces.pdf>)
+- [IRI API Deployment Models - February 6, 2025](<2025.02.06 - IRI API deployment models.pdf>)
+- [SC25 BoF: IRI Interfaces at Work - November, 2025](<SC25_BoF_IRI_interfaces.pdf>)
+- [Genesis of IRI - April 25, 2026](<2026.04.25 - Genesis-IRI.pdf>)
+- [IRI v2.0 Proposed Changes - July 30, 2026](<2026.07.30 - IRI v2.0 Proposed Changes.pdf>)
+- [IRI Resource Architecture Overview - August 21, 2026](<2026.08.21 - iri-resource-architecture-overview.pdf>)
